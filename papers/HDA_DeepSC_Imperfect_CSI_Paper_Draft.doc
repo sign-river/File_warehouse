@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>面向不完美信道状态信息的混合数字—模拟语义图像通信鲁棒接收研究</title>
+<style>
+@page { size: A4; margin: 2.4cm 2.2cm 2.4cm 2.2cm; }
+body { font-family: "SimSun", "宋体", serif; font-size: 12pt; line-height: 1.75; color: #111; max-width: 18cm; margin: 0 auto; }
+h1 { font-family: "SimHei", "黑体", sans-serif; font-size: 16pt; text-align: center; margin: 1.2em 0 0.7em; }
+h2 { font-family: "SimHei", "黑体", sans-serif; font-size: 14pt; margin: 1.15em 0 0.55em; }
+h3 { font-family: "SimHei", "黑体", sans-serif; font-size: 12pt; margin: 1em 0 0.35em; }
+p { text-align: justify; text-indent: 2em; margin: 0.35em 0; }
+.title { font-family: "SimHei", "黑体", sans-serif; font-size: 22pt; font-weight: bold; text-align: center; line-height: 1.45; margin-top: 1.8cm; }
+.etitle { font-family: "Times New Roman", serif; font-size: 15pt; font-weight: bold; text-align: center; line-height: 1.35; margin-top: 0.7em; }
+.author { text-align: center; text-indent: 0; margin-top: 1.3em; }
+.meta { text-align: center; text-indent: 0; color: #444; }
+.abstract { border: 1px solid #777; padding: 0.8em 1.1em; margin: 1.2em 0; }
+.abstract p { text-indent: 0; }
+.keywords { text-indent: 0; }
+.eq { text-align: center; text-indent: 0; font-family: "Times New Roman", serif; font-size: 12pt; margin: 0.7em 0; }
+.caption { text-align: center; text-indent: 0; font-size: 10.5pt; margin: 0.25em 0 0.75em; }
+table { border-collapse: collapse; width: 100%; margin: 0.8em 0 1em; font-size: 10.5pt; }
+th, td { border: 1px solid #555; padding: 0.42em 0.55em; text-align: center; vertical-align: middle; }
+th { font-family: "SimHei", "黑体", sans-serif; background: #f2f2f2; }
+.note { background: #f7f7f7; border-left: 4px solid #666; padding: 0.55em 0.8em; margin: 0.8em 0; }
+.note p { text-indent: 0; }
+.flow { display: table; width: 100%; border-spacing: 5px; margin: 0.9em 0 0.3em; }
+.flow-row { display: table-row; }
+.box { display: table-cell; border: 1px solid #555; padding: 0.55em; text-align: center; vertical-align: middle; background: #fafafa; }
+.arrow { display: table-cell; width: 4%; text-align: center; vertical-align: middle; font-family: "Times New Roman", serif; }
+ul, ol { margin-top: 0.3em; margin-bottom: 0.6em; }
+li { margin: 0.2em 0; }
+.refs p { text-indent: -2em; padding-left: 2em; font-size: 10.5pt; line-height: 1.5; }
+.pagebreak { page-break-before: always; }
+.small { font-size: 10.5pt; }
+.center { text-align: center; text-indent: 0; }
+</style>
+</head>
+<body>
+<div class="title">面向不完美信道状态信息的混合数字—模拟语义图像通信鲁棒接收研究<br>——HDA-DeepSC复现、诊断与扩展</div>
+<div class="etitle">Robust Reception for Hybrid Digital–Analog Semantic Image Communications with Imperfect CSI: Reproduction, Diagnosis, and Extension of HDA-DeepSC</div>
+<p class="author">作者：__________　　指导教师：__________</p>
+<p class="meta">单位：__________　　专业：__________　　日期：2026年7月</p>
+
+<div class="abstract">
+<p><b>摘　要：</b>混合数字—模拟语义通信（Hybrid Digital–Analog Semantic Communication，HDA-SemCom）通过数字支路传输关键语义信息、模拟支路传输连续残差信息，可兼顾数字传输的可靠性与模拟传输的渐进退化特性。现有HDA-DeepSC研究主要在理想或简化信道状态信息（Channel State Information，CSI）条件下验证性能，而实际接收端通常只能获得含误差的信道估计。针对这一问题，本文在复现HDA-DeepSC图像传输系统的基础上，引入导频辅助的线性最小均方误差（Linear Minimum Mean Square Error，LMMSE）信道估计、可控归一化均方误差（Normalized Mean Square Error，NMSE）模型以及面向数字支路的可微信道噪声训练代理，并系统分析传统最小二乘（Least Squares，LS）检测与鲁棒LMMSE检测在软解调后的等价性。分析表明，当均衡增益及输出噪声方差被一致地传递给软解调器时，线性检测权重会在对数似然比（Log-Likelihood Ratio，LLR）度量中抵消，从而使两种线性检测器产生近似相同的译码性能。为突破该限制，本文提出一种保持原自适应调制与编码（Adaptive Modulation and Coding，AMC）链路不变的原始接收域CSI不确定性感知最大后验（Maximum A Posteriori，MAP）软解调方法，将信道估计误差建模为与候选星座符号能量相关的附加噪声。初步受控实验表明，在16阶正交幅度调制（16-Quadrature Amplitude Modulation，16-QAM）区域，当CSI NMSE为0.1、0.2和0.5时，所提接收器相对失配LS基线的平均误码率（Bit Error Rate，BER）绝对降低分别为0.0096、0.0162和0.0230，平均峰值信噪比（Peak Signal-to-Noise Ratio，PSNR）增益分别约为1.04 dB、1.45 dB和1.06 dB。结果同时表明，鲁棒收益具有明显的调制方式依赖性：对于恒模的二进制相移键控（Binary Phase Shift Keying，BPSK）和正交相移键控（Quadrature Phase Shift Keying，QPSK），候选相关方差退化为公共尺度，性能增益有限；对于非恒模16-QAM，误差感知似然可有效校准软信息并改善低密度奇偶校验码（Low-Density Parity-Check，LDPC）译码。本文进一步讨论了AMC切换引起的BER锯齿、数字误码与端到端图像质量不完全一致的原因，以及当前实值块Rician模型和有限蒙特卡洛样本带来的局限。</p>
+<p class="keywords"><b>关键词：</b>语义通信；混合数字—模拟；不完美信道状态信息；鲁棒软解调；最大后验检测；自适应调制与编码；Rician衰落</p>
+</div>
+
+<div class="abstract">
+<p><b>Abstract:</b> Hybrid digital–analog semantic communication combines a digital branch for essential semantic information and an analog branch for continuous residual information, thereby balancing reliable discrete delivery and graceful quality degradation. This work reproduces an HDA-DeepSC image transmission system and extends its receiver to imperfect channel state information. Pilot-aided LMMSE channel estimation, controlled CSI-NMSE perturbations, and a differentiable noisy training surrogate are introduced. We further diagnose why conventional LS and robust LMMSE linear equalizers can become nearly equivalent after gain-aware soft demodulation: the equalization coefficient cancels when both the residual gain and filtered-noise variance are consistently included in the LLR metric. To obtain a genuinely different receiver, a raw-domain uncertainty-aware MAP soft demodulator is developed while preserving the original AMC table. Preliminary controlled experiments in the 16-QAM region show average absolute BER reductions of 0.0096, 0.0162, and 0.0230 for CSI NMSE values of 0.1, 0.2, and 0.5, respectively, with corresponding average PSNR gains of approximately 1.04 dB, 1.45 dB, and 1.06 dB. The results reveal a modulation-dependent robustness mechanism and motivate further large-sample paired validation.</p>
+<p class="keywords"><b>Keywords:</b> semantic communication; hybrid digital–analog transmission; imperfect CSI; robust soft demodulation; maximum a posteriori detection; adaptive modulation and coding; Rician fading</p>
+</div>
+
+<h1>1　引言</h1>
+<p>第五代移动通信向第六代移动通信演进的过程中，通信目标正由“准确传输比特”逐步扩展为“高效传递任务相关意义”。传统信息论以熵、互信息和信道容量刻画符号传输极限，而语义通信更强调接收端能否恢复源信息的关键内容或完成下游任务。DeepSC等端到端学习系统证明了深度神经网络可以联合优化语义编码、信道编码和语义解码；Deep Joint Source–Channel Coding（深度联合信源信道编码，DeepJSCC）则展示了图像在低信噪比环境下的渐进式质量退化能力。</p>
+<p>现有语义通信大致可分为模拟语义通信和数字语义通信。模拟方案将连续语义特征直接映射到信道符号，具有可微、低信噪比下平滑退化等优点，但难以直接兼容成熟的数字加密和标准信道编码。数字方案将语义特征量化为比特流，可利用LDPC编码、标准星座和加密算法，却不可避免地引入量化误差，并可能在译码门限附近出现“悬崖效应”。HDA-DeepSC通过数字支路传输关键语义成分、模拟支路传输剩余连续成分，为缓解上述矛盾提供了统一框架。</p>
+<p>然而，从研究假设到实际部署仍存在明显差距。原始系统在数字支路训练时通常采用近似无误码传输，以避免量化、比特映射和硬译码造成梯度中断；在接收端分析中，也常默认完美CSI或将估计信道当作真实信道。实际无线系统中的CSI需要通过有限导频估计，估计误差会改变均衡、软解调和信道译码的可靠度。尤其在Rician块衰落下，名义信噪比相同的图像可能经历差异显著的瞬时信道增益，若AMC仅依据名义信噪比切换调制和码率，可能在切换点选择过于激进的模式。</p>
+<p>本文围绕“在不改变原HDA-DeepSC主体结构和AMC表的前提下，提高不完美CSI条件下的接收鲁棒性”开展研究。与简单替换线性均衡器不同，本文从LLR生成机制出发，首先揭示传统LS与鲁棒LMMSE在正确增益归一化软解调中的近似等价性，然后构造候选符号相关的CSI不确定性似然。本文的主要工作如下：</p>
+<ol>
+<li>复现以Swin Transformer为语义编解码器、数字与模拟双支路联合传输、OpenAI风格U-Net扩散去噪网络为增强模块的HDA-DeepSC系统，并对训练信噪比未正确随机化、输出常数图、评估波动等问题进行诊断与修复。</li>
+<li>为数字支路加入可微的Rician噪声训练代理、导频LMMSE信道估计和可控加性NMSE模型，使训练及评估能够显式考虑不完美CSI；同时明确该代理不等同于完整的量化—LDPC—调制—硬译码链路。</li>
+<li>从软判决数学形式出发，说明线性LS与鲁棒LMMSE权重在匹配的LLR计算中可能被抵消，并通过配对实验观察到两者BER差异极小，从而避免将“连续符号均方误差降低”错误等同于“LDPC译码BER改善”。</li>
+<li>提出原始接收域CSI误差感知MAP软解调器，并保持原AMC调制编码表不变；通过同一检查点、相同衰落、相同噪声和相同CSI误差的配对实验隔离接收算法贡献。</li>
+<li>利用受控NMSE实验分析鲁棒收益与星座结构的关系。初步结果显示，所提方法在16-QAM和中等CSI误差下具有较稳定的BER与PSNR增益，而在恒模BPSK/QPSK区域收益有限。</li>
+</ol>
+
+<h1>2　相关工作</h1>
+<h2>2.1　语义通信与深度联合信源信道编码</h2>
+<p>Shannon信息论建立了可靠通信的理论基础，但不直接刻画信息的意义。近年来，端到端深度学习被用于学习从源数据到信道符号的联合映射。DeepSC面向文本语义传输，将句子嵌入与信道编码统一到神经网络中；DeepJSCC面向无线图像传输，在低信噪比区域表现出区别于传统分离编码的平滑退化特性。此类方法的共同优势是能够直接以任务损失或重建失真训练，但其连续信号表示与标准数字协议之间仍存在兼容性问题。</p>
+<h2>2.2　混合数字—模拟语义通信</h2>
+<p>传统混合数字—模拟（Hybrid Digital–Analog，HDA）联合信源信道编码通过数字层传输基础描述、模拟层传输量化残差，可在信道失配条件下缓解纯数字系统的悬崖效应。HDA-DeepSC将该思想扩展到深度语义空间：语义编码器提取潜变量，分配模块将其拆分为数字关键成分和模拟辅助成分，接收端再完成特征融合与图像重建。原工作还引入频域损失和扩散框架增强信号检测网络DiffSDNet，以提高低信噪比下的模拟支路去噪能力。</p>
+<h2>2.3　不完美CSI与鲁棒接收</h2>
+<p>在相干接收系统中，有限导频和噪声使接收端只能获得估计信道。传统失配接收将估计值直接视为真实信道，容易产生过度自信的LLR。经典鲁棒方法包括LMMSE均衡、误差协方差感知检测和贝叶斯边缘化。对于信道编码系统，决定最终译码性能的不仅是均衡后符号均方误差，还包括LLR的符号、尺度和校准程度。因此，只有当信道不确定性进入符号似然或比特后验概率时，接收机才可能向LDPC译码器提供更可信的软信息。</p>
+
+<h1>3　系统模型与基线复现</h1>
+<h2>3.1　HDA-DeepSC总体结构</h2>
+<div class="flow">
+<div class="flow-row"><div class="box">输入图像 I</div><div class="arrow">→</div><div class="box">Swin语义编码器 S(·)</div><div class="arrow">→</div><div class="box">语义特征 z</div><div class="arrow">→</div><div class="box">数字—模拟分配</div></div>
+<div class="flow-row"><div class="box">数字特征 z<sub>D</sub></div><div class="arrow">→</div><div class="box">量化/比特/LDPC/AMC</div><div class="arrow">→</div><div class="box">Rician信道与数字接收</div><div class="arrow">→</div><div class="box">恢复特征 ẑ<sub>D</sub></div></div>
+<div class="flow-row"><div class="box">模拟残差 z<sub>A</sub></div><div class="arrow">→</div><div class="box">模拟编码与功率归一化</div><div class="arrow">→</div><div class="box">Rician信道/LS/DiffSDNet</div><div class="arrow">→</div><div class="box">恢复特征 ẑ<sub>A</sub></div></div>
+<div class="flow-row"><div class="box">ẑ<sub>D</sub> + ẑ<sub>A</sub></div><div class="arrow">→</div><div class="box">语义解码器 S<sup>−1</sup>(·)</div><div class="arrow">→</div><div class="box">重建图像 Î</div><div class="arrow"></div><div class="box">PSNR / MS-SSIM / BER等评价</div></div>
+</div>
+<p class="caption">图1　复现系统及不完美CSI鲁棒接收扩展框架</p>
+<p>设输入图像为I，语义编码器输出潜变量</p>
+<p class="eq">z = S(I; α<sub>t</sub>).　　(1)</p>
+<p>数字—模拟分配模块将z分解为数字关键成分z<sub>D</sub>和模拟残差z<sub>A</sub>。数字成分经过标量量化Q(·)、固定长度比特映射E(·)、LDPC编码C<sub>D</sub>(·)与调制M(·)后发送；模拟成分经过模拟信道编码器C<sub>A</sub>(·)和功率归一化后直接发送。接收端恢复两路特征并相加：</p>
+<p class="eq">ẑ = H<sup>−1</sup>(ẑ<sub>D</sub>; θ<sub>r</sub>) + ẑ<sub>A</sub>,　Î = S<sup>−1</sup>(ẑ; α<sub>r</sub>).　　(2)</p>
+<h2>3.2　数字支路与原AMC配置</h2>
+<p>数字支路采用8位标量量化、块长672的LDPC码，以及由名义信噪比驱动的AMC。复现配置保持原有五档调制编码组合，如表1所示。模式切换会使BER曲线在8、12和16 dB附近出现锯齿，因此跨模式的BER不必随名义信噪比严格单调；算法比较应在相同信噪比、相同AMC模式下进行。</p>
+<table>
+<tr><th>名义信噪比区间</th><th>调制方式</th><th>LDPC码率</th><th>主要特征</th></tr>
+<tr><td>0–2 dB</td><td>BPSK</td><td>1/2</td><td>最低频谱效率、较强保护</td></tr>
+<tr><td>4–6 dB</td><td>QPSK</td><td>1/2</td><td>恒模、较强保护</td></tr>
+<tr><td>8–10 dB</td><td>QPSK</td><td>3/4</td><td>恒模、冗余减少</td></tr>
+<tr><td>12–14 dB</td><td>16-QAM</td><td>1/2</td><td>非恒模、候选能量不同</td></tr>
+<tr><td>16–18 dB</td><td>16-QAM</td><td>3/4</td><td>高码率、对软信息更敏感</td></tr>
+</table>
+<p class="caption">表1　原AMC调制编码表</p>
+<h2>3.3　模拟支路与DiffSDNet</h2>
+<p>模拟支路采用连续特征传输，并在接收端通过LS检测和模拟解码器恢复残差。复现过程中引入OpenAI improved-diffusion风格的U-Net作为DiffSDNet骨干，并使用信噪比感知门控控制去噪残差强度：</p>
+<p class="eq">z<sub>out</sub> = z<sub>raw</sub> + α(γ)[D<sub>θ</sub>(z<sub>raw</sub>) − z<sub>raw</sub>].　　(3)</p>
+<p>其中D<sub>θ</sub>为冻结的扩散去噪网络，α(γ)为随信噪比变化的可训练门控。该结构使模型能够在低信噪比时增加去噪作用，在高信噪比时避免过度平滑。由于本文重点是数字接收端不完美CSI，DiffSDNet结构与参数在配对实验中保持一致。</p>
+<h2>3.4　Rician块衰落与CSI模型</h2>
+<p>项目当前采用实值块Rician衰落模型，即每个样本在一幅图像传输期间共享一个信道系数：</p>
+<p class="eq">y = hx + n,　h = μ + σw,　w ~ N(0,1).　　(4)</p>
+<p>其中Rician因子K=3，噪声功率由衰落前发射信号功率和名义信噪比确定。该实现能够体现块衰落和深衰落样本，但不包含完整复基带、多径和频率选择性效应，因此结论主要适用于当前仿真模型。</p>
+
+<h1>4　不完美CSI建模与鲁棒接收方法</h1>
+<h2>4.1　数字支路可微信道噪声训练代理</h2>
+<p>完整数字链路包含舍入量化、比特操作、LDPC译码和硬判决，难以直接反向传播。为使第三阶段端到端训练感知信道扰动，本文保留“training_error_free”控制逻辑，但将其实际执行路径扩展为可微的连续特征接收代理。代理对量化后的数字特征施加真实Rician信道、加性噪声和可选CSI扰动，再利用连续检测结果构造残差扰动。需要强调，该训练代理不模拟实际LDPC误码，其训练阶段BER标记为无效；正式BER仅在评估阶段完整数字链路中计算。</p>
+<h2>4.2　导频LMMSE信道估计</h2>
+<p>设信道先验方差为σ<sub>h</sub><sup>2</sup>，导频总能量为E<sub>p</sub>，噪声方差为σ<sub>n</sub><sup>2</sup>。导频LMMSE估计可表示为h = ĥ + e，估计误差方差为</p>
+<p class="eq">σ<sub>e</sub><sup>2</sup> = (σ<sub>h</sub><sup>2</sup>σ<sub>n</sub><sup>2</sup>) / (E<sub>p</sub>σ<sub>h</sub><sup>2</sup> + σ<sub>n</sub><sup>2</sup>).　　(5)</p>
+<p>除导频估计外，本文还采用加性NMSE模式ĥ = h + e进行受控鲁棒性消融。导频模式更接近完整接收过程；受控NMSE模式则用于在相同误差强度下隔离接收算法贡献，二者不应混为同一类系统开销实验。</p>
+<h2>4.3　线性鲁棒LMMSE的LLR等价性诊断</h2>
+<p>一种直接思路是用鲁棒LMMSE权重替代LS：</p>
+<p class="eq">w<sub>R</sub> = P<sub>x</sub>ĥ / [P<sub>x</sub>(ĥ<sup>2</sup> + σ<sub>e</sub><sup>2</sup>) + σ<sub>n</sub><sup>2</sup>],　x̂ = w<sub>R</sub>y.　　(6)</p>
+<p>但是，若软解调器同时使用有效增益g<sub>eff</sub> = wĥ和滤波后噪声方差σ<sub>out</sub><sup>2</sup> = w<sup>2</sup>σ<sub>v</sub><sup>2</sup>，则候选符号s的距离满足</p>
+<p class="eq">|wy − wĥs|<sup>2</sup> / (w<sup>2</sup>σ<sub>v</sub><sup>2</sup>) = |y − ĥs|<sup>2</sup> / σ<sub>v</sub><sup>2</sup>.　　(7)</p>
+<p>因此线性权重w被完全抵消。项目中的实际诊断结果也支持这一点：早期B组LS与C组鲁棒LMMSE的最大绝对BER差约为6.59×10<sup>−4</sup>，平均绝对差约为1.82×10<sup>−4</sup>，不足以证明明显的抗衰落提升。这一发现说明，优化均衡后连续符号均方误差并不必然改善后续LDPC译码，必须直接优化软信息模型。</p>
+<h2>4.4　原始接收域CSI不确定性感知MAP软解调</h2>
+<p>在不完美CSI下，接收信号可写为</p>
+<p class="eq">y = ĥs + es + n.　　(8)</p>
+<p>对于候选符号s，误差项es的方差与|s|<sup>2</sup>成正比。失配LS基线忽略该项，其对数度量为</p>
+<p class="eq">M<sub>B</sub>(s) = −|y − ĥs|<sup>2</sup> / (2σ<sub>n</sub><sup>2</sup>).　　(9)</p>
+<p>所提鲁棒接收器采用候选相关方差：</p>
+<p class="eq">v(s) = σ<sub>n</sub><sup>2</sup> + |s|<sup>2</sup>σ<sub>e</sub><sup>2</sup>,　M<sub>C</sub>(s) = −|y − ĥs|<sup>2</sup> / [2v(s)] − 0.5lnv(s).　　(10)</p>
+<p>随后使用精确log-sum-exp计算每个编码比特的LLR：</p>
+<p class="eq">L(b<sub>k</sub>) = ln[Σ<sub>s∈S<sub>k,1</sub></sub>exp(M(s))] − ln[Σ<sub>s∈S<sub>k,0</sub></sub>exp(M(s))].　　(11)</p>
+<p>代码与LDPC译码器采用L = lnP(b=1)/P(b=0)的符号约定。与传统Max-Log近似相比，式(11)保留了同一比特集合中多个候选符号的概率贡献。为保证结论可解释，完美CSI参考、失配LS基线和鲁棒MAP接收使用同一检查点，并在每次前向前恢复相同随机种子，使B、C共享真实信道、噪声和CSI误差。</p>
+<h2>4.5　调制方式依赖性</h2>
+<p>BPSK与QPSK为恒模调制，对所有候选符号都有相同|s|<sup>2</sup>，式(10)中的v(s)退化为公共尺度，鲁棒方法主要改变LLR幅度而不改变候选排序，因此增益通常有限。归一化16-QAM每个实维度包含±1/√10和±3/√10两类幅度，对应能量1/10和9/10；不同候选符号具有不同CSI不确定性，鲁棒似然会实质改变候选概率及LLR校准。这一理论差异与实验中“4–10 dB近似无差别、12–18 dB开始出现收益”的现象一致。</p>
+
+<h1>5　实验设置</h1>
+<h2>5.1　数据集与网络配置</h2>
+<p>训练集采用DIV2K高分辨率图像，测试集采用Kodak图像。语义编解码器设置为6层Swin Transformer，每层宽度120、6个注意力头；潜变量通道数和基础通道数均为120。训练随机裁剪尺寸为128×128，批量大小为4，Rician因子K=3，训练与评估信噪比覆盖0、2、4、6、8、10、12、14、16和18 dB。当前复现主配置中学习率为1×10<sup>−4</sup>，三阶段训练轮数分别为80、60和30；DiffSDNet采用OpenAI风格U-Net，并配置信噪比感知残差门控。</p>
+<h2>5.2　对比方案</h2>
+<table>
+<tr><th>方案</th><th>CSI条件</th><th>接收方法</th><th>用途</th></tr>
+<tr><td>A</td><td>完美CSI</td><td>匹配软解调</td><td>理想参考，不等同于严格容量上界</td></tr>
+<tr><td>B</td><td>不完美CSI</td><td>忽略估计误差的失配LS软解调</td><td>传统基线</td></tr>
+<tr><td>C</td><td>与B相同的不完美CSI</td><td>CSI不确定性感知MAP软解调</td><td>本文方案</td></tr>
+</table>
+<p class="caption">表2　接收端配对实验方案</p>
+<p>主实验保留原AMC配置。为排除不同训练模型的混杂，A、B、C在同一次配对实验中加载同一模型检查点；为检验检查点依赖性，完整验证应分别在B类和C类训练检查点上重复。导频数N<sub>p</sub>=4代表常规估计条件，N<sub>p</sub>=1代表导频受限压力条件。受控NMSE实验不计导频开销，仅用于机制消融。</p>
+<h2>5.3　评价指标</h2>
+<p>图像质量采用PSNR、多尺度结构相似度（Multi-Scale Structural Similarity，MS-SSIM）、视觉信息保真度（Visual Information Fidelity，VIF）、学习感知图像块相似度（Learned Perceptual Image Patch Similarity，LPIPS）和Fréchet Inception距离（Fréchet Inception Distance，FID）。数字链路采用LDPC译码前后BER、LLR二元交叉熵、LLR平均绝对值、量化整数均方误差和数字特征均方误差。CSI公平性采用实际CSI NMSE和有效信噪比差验证。由于Kodak样本数较少，FID估计方差较大，本文将其作为辅助指标而非主要结论依据。</p>
+<h2>5.4　统计方法</h2>
+<p>配对差值定义为ΔBER = BER<sub>B</sub> − BER<sub>C</sub>和ΔPSNR = PSNR<sub>C</sub> − PSNR<sub>B</sub>，正值均表示方案C更优。每个信噪比点采用相同随机样本进行配对，并通过自助法获得95%置信区间（Confidence Interval，CI）。正式系统级结论建议使用至少30次蒙特卡洛（Monte Carlo，MC）重复；本文当前受控NMSE数据来自小规模诊断实验，因此将其表述为初步证据。</p>
+
+<h1>6　实验结果与讨论</h1>
+<h2>6.1　复现过程与关键问题诊断</h2>
+<p>复现初期曾出现不同信噪比输出近似常数图、损失对信道条件不敏感等问题。检查发现随机训练信噪比配置未真正进入训练采样，修复后AWGN曲线随信噪比提升并在高信噪比区域趋于饱和，说明高信噪比时性能上限逐步由语义压缩、HDA分配、量化和融合误差决定。Rician曲线波动明显大于AWGN，增加平均次数后波动有所缓解。该过程说明，单次信道实现和配置路径错误都可能被误判为网络结构问题，复现实验必须同步审计数据、配置、信道和输出方差。</p>
+<h2>6.2　早期独立检查点三组比较的局限</h2>
+<p>早期实验分别训练完美CSI+LS、不完美CSI+LS和不完美CSI+鲁棒LMMSE三个检查点。其绝对图像质量中B组一度优于A、C，而数字BER近似重合。该结果不能解释为“不完美CSI优于完美CSI”，因为三个检查点的语义编码器、数模分配和优化轨迹均不同；同时，线性检测权重在软解调中近似抵消。故本文不使用该独立检查点结果证明接收算法优劣，而将其保留为“联合训练系统比较”和问题诊断证据。</p>
+<h2>6.3　完美CSI回归与AMC模式效应</h2>
+<p>完美CSI条件下，新精确似然与旧软解调在4–10 dB区间几乎一致；在12、14、16和18 dB处，BER绝对降低分别约为0.00422、0.00439、0.00247和0.00190，PSNR差分别为+0.432、+0.017、−0.257和+0.456 dB。由于这些点对应16-QAM，该差异主要反映精确log-sum-exp似然和解调噪声方差尺度修正的作用，而不是不完美CSI鲁棒性本身。</p>
+<p>原AMC在8、12和16 dB切换LDPC码率或调制阶数。实测BER在这些位置出现反弹，与模式升级后冗余减少或星座变密一致。因此，本文保留原AMC以维持系统一致性，但在解释曲线时不要求跨AMC模式严格单调，而关注相同信噪比、相同模式下的B—C配对差值。</p>
+<h2>6.4　受控CSI NMSE实验</h2>
+<table>
+<tr><th>目标CSI NMSE</th><th>平均BER绝对降低<br>BER<sub>B</sub>−BER<sub>C</sub></th><th>平均PSNR增益<br>PSNR<sub>C</sub>−PSNR<sub>B</sub></th><th>初步解释</th></tr>
+<tr><td>0.10</td><td>0.009557</td><td>+1.040 dB</td><td>14–18 dB多数点获得正向且部分显著增益</td></tr>
+<tr><td>0.20</td><td>0.016187</td><td>+1.445 dB</td><td>BER四个点均为正，16/18 dB图像增益显著</td></tr>
+<tr><td>0.50</td><td>0.022957</td><td>+1.058 dB</td><td>BER收益最大，图像增益受样本波动影响</td></tr>
+<tr><td>1.00</td><td>0.019637</td><td>+0.022 dB</td><td>BER仍改善，但未稳定转化为图像质量增益</td></tr>
+</table>
+<p class="caption">表3　受控NMSE诊断实验的16-QAM区域平均结果</p>
+<p>在NMSE=0.1时，14、16和18 dB的BER增益95% CI下限均大于0，16和18 dB的PSNR增益亦具有统计支持；在NMSE=0.2时，12–18 dB的BER增益均为正且CI下限大于0，16和18 dB的PSNR增益较稳定；在NMSE=0.5时，14–18 dB的BER改善较明显。上述趋势说明，候选相关方差能够在中等CSI误差和16-QAM条件下改善软信息质量。</p>
+<p>当NMSE增大到1.0时，BER平均仍有正收益，但PSNR平均增益接近0。原因包括：其一，普通BER对所有比特等权，而8位量化中高有效位错误对数字特征的破坏远大于低有效位错误；其二，HDA接收端将数字重建特征与模拟残差直接相加，少量灾难性数字错误仍可能污染最终语义特征；其三，在极差CSI下，两种接收器均可能超过系统可恢复区间。因此，BER改善是必要证据，但不能替代端到端图像指标。</p>
+<h2>6.5　可靠结论的边界</h2>
+<div class="note"><p><b>当前可支持的结论：</b>在当前实值块Rician模型和原AMC配置下，CSI不确定性感知MAP软解调的作用主要出现在非恒模16-QAM区域；受控NMSE=0.1–0.5的小规模配对实验已观察到稳定方向的BER降低和部分显著PSNR增益。</p><p><b>当前不能过度声称的结论：</b>尚不能据此断言完整系统在全部信噪比、全部调制方式和所有检查点上均显著优于基线。强系统级结论仍需完成两个独立检查点、N<sub>p</sub>=1与N<sub>p</sub>=4、完整Kodak测试集、MC≥30的配对验证。</p></div>
+<h2>6.6　与原HDA-DeepSC工作的关系</h2>
+<p>本文没有删除或替换原AMC，也未改变数字—模拟分配和融合的基本框架。所提方法位于数字接收端的软解调环节，利用接收端已有的信道估计误差方差，对原始接收信号进行概率建模。因而该扩展与原系统兼容：当σ<sub>e</sub><sup>2</sup>→0时，鲁棒似然退化为匹配似然；在恒模调制下，方法近似退化为LLR尺度校准；在非恒模调制和较大估计误差下，候选相关不确定性产生主要收益。</p>
+
+<h1>7　结论与展望</h1>
+<p>本文完成了HDA-DeepSC语义图像通信系统的复现、信道与训练流程诊断，并围绕不完美CSI提出数字接收端鲁棒扩展。研究发现，仅将LS替换为鲁棒LMMSE线性均衡器并不能保证LDPC译码性能提升，因为在增益和方差一致传递的软解调中，线性权重可能被抵消。基于这一诊断，本文进一步提出原始接收域CSI不确定性感知MAP软解调，将信道估计误差建模为与候选符号能量相关的附加噪声，并保留原有AMC配置。初步受控实验表明，该方法在16-QAM和中等CSI误差下能够降低BER，并在多个条件下改善PSNR；对于恒模BPSK/QPSK，收益则较小。</p>
+<p>后续工作包括：第一，完成双检查点、双导频数和MC≥30的系统级配对实验，报告均值、95% CI和效应量；第二，引入LDPC块错误率、最低5% PSNR、图像中断概率和高有效位加权误码指标，以更准确刻画深衰落风险；第三，将名义信噪比驱动AMC扩展为有效信噪比和CSI误差联合驱动的鲁棒AMC，同时保持原AMC作为基线；第四，研究跨多个独立衰落块的交织和软信息合并以获得时间或频率分集；第五，将当前实值块Rician模型扩展为复基带、多径和频率选择性信道，并评估导频开销、计算复杂度和硬件实现可行性。</p>
+
+<h1 class="pagebreak">参考文献</h1>
+<div class="refs">
+<p>[1] C. E. Shannon, “A Mathematical Theory of Communication,” <i>Bell System Technical Journal</i>, vol. 27, pp. 379–423 and 623–656, 1948.</p>
+<p>[2] H. Xie, Z. Qin, G. Y. Li, and B.-H. Juang, “Deep Learning Enabled Semantic Communication Systems,” <i>IEEE Transactions on Signal Processing</i>, vol. 69, pp. 2663–2675, 2021, doi: 10.1109/TSP.2021.3071210.</p>
+<p>[3] E. Bourtsoulatze, D. Burth Kurka, and D. Gündüz, “Deep Joint Source-Channel Coding for Wireless Image Transmission,” <i>IEEE Transactions on Cognitive Communications and Networking</i>, vol. 5, no. 3, pp. 567–579, 2019, doi: 10.1109/TCCN.2019.2919300.</p>
+<p>[4] H. Xie, Z. Qin, Z. Han, and K. B. Letaief, “Hybrid Digital-Analog Semantic Communications,” <i>IEEE Journal on Selected Areas in Communications</i>, vol. 43, no. 7, 2025, doi: 10.1109/JSAC.2025.3559149.</p>
+<p>[5] U. Mittal and N. Phamdo, “Hybrid Digital-Analog Joint Source-Channel Codes for Broadcasting and Robust Communications,” <i>IEEE Transactions on Information Theory</i>, vol. 48, no. 5, 2002.</p>
+<p>[6] Z. Liu et al., “Swin Transformer: Hierarchical Vision Transformer Using Shifted Windows,” in <i>Proceedings of the IEEE/CVF International Conference on Computer Vision</i>, pp. 10012–10022, 2021.</p>
+<p>[7] J. Ho, A. Jain, and P. Abbeel, “Denoising Diffusion Probabilistic Models,” in <i>Advances in Neural Information Processing Systems</i>, vol. 33, 2020.</p>
+<p>[8] Z. Wang, E. P. Simoncelli, and A. C. Bovik, “Multiscale Structural Similarity for Image Quality Assessment,” in <i>Proceedings of the 37th Asilomar Conference on Signals, Systems and Computers</i>, 2003, doi: 10.1109/ACSSC.2003.1292216.</p>
+<p>[9] H. R. Sheikh and A. C. Bovik, “Image Information and Visual Quality,” <i>IEEE Transactions on Image Processing</i>, vol. 15, no. 2, pp. 430–444, 2006, doi: 10.1109/TIP.2005.859378.</p>
+<p>[10] R. Zhang, P. Isola, A. A. Efros, E. Shechtman, and O. Wang, “The Unreasonable Effectiveness of Deep Features as a Perceptual Metric,” in <i>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</i>, pp. 586–595, 2018, doi: 10.1109/CVPR.2018.00068.</p>
+<p>[11] M. Heusel, H. Ramsauer, T. Unterthiner, B. Nessler, and S. Hochreiter, “GANs Trained by a Two Time-Scale Update Rule Converge to a Local Nash Equilibrium,” in <i>Advances in Neural Information Processing Systems</i>, 2017.</p>
+<p>[12] A. Goldsmith, <i>Wireless Communications</i>. Cambridge University Press, 2005.</p>
+<p>[13] S. M. Kay, <i>Fundamentals of Statistical Signal Processing, Volume I: Estimation Theory</i>. Prentice Hall, 1993.</p>
+<p>[14] T. M. Cover and J. A. Thomas, <i>Elements of Information Theory</i>, 2nd ed. Wiley, 2006.</p>
+<p>[15] T. Richardson and R. Urbanke, <i>Modern Coding Theory</i>. Cambridge University Press, 2008.</p>
+<p>[16] IEEE Standard 802.11ad-2012, “Enhancements for Very High Throughput in the 60 GHz Band,” 2012.</p>
+</div>
+
+<h1>附录A　实验结果状态与复现说明</h1>
+<table>
+<tr><th>证据类型</th><th>当前状态</th><th>在论文中的用途</th></tr>
+<tr><td>原始HDA-DeepSC复现</td><td>已完成主要训练、AWGN/Rician评估和问题修复</td><td>系统基线与实现基础</td></tr>
+<tr><td>独立检查点A/B/C绝对曲线</td><td>已完成，但存在训练轨迹混杂</td><td>作为诊断结果，不用于证明纯接收收益</td></tr>
+<tr><td>LS与鲁棒LMMSE等价性检查</td><td>已完成，BER差异极小</td><td>支持提出新软似然方法的动机</td></tr>
+<tr><td>受控NMSE、16-QAM诊断</td><td>已完成小规模实验</td><td>支持机制有效性的初步结论</td></tr>
+<tr><td>原AMC、双检查点、N<sub>p</sub>=1/4、MC≥30</td><td>待完成或待汇总</td><td>形成最终系统级强结论所必需</td></tr>
+</table>
+<p class="small">说明：本文初稿基于当前项目代码、实验记录和已完成诊断数据撰写。正式投稿或答辩前，应将表3替换或补充为完整MC实验结果，并加入最终性能曲线、置信区间图和典型重建图像。</p>
+</body>
+</html>
