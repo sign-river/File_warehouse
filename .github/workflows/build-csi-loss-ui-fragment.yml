@@ -1,0 +1,87 @@
+name: Build CSI Loss UI Paper Fragment
+
+on:
+  push:
+    branches:
+      - paper-fragment-csi-loss-ui-20260720
+    paths:
+      - 'papers/CSI_Loss_UI_Fragment/**'
+      - '.github/workflows/build-csi-loss-ui-fragment.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
+            latexmk \
+            texlive-xetex \
+            texlive-publishers \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-lang-chinese \
+            fonts-noto-cjk \
+            pandoc \
+            poppler-utils \
+            zip
+
+      - name: Install Python packages
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install matplotlib numpy python-docx
+
+      - name: Generate figures and Word style template
+        working-directory: papers/CSI_Loss_UI_Fragment
+        run: |
+          python generate_figures.py
+          python make_reference_docx.py
+          test -f figures/integrated_framework.pdf
+          test -f figures/operator_interface.pdf
+          test -f reference.docx
+
+      - name: Build IEEE-style PDF
+        working-directory: papers/CSI_Loss_UI_Fragment
+        run: |
+          latexmk -xelatex -interaction=nonstopmode -halt-on-error main.tex
+          test -s main.pdf
+
+      - name: Build editable Word manuscript
+        working-directory: papers/CSI_Loss_UI_Fragment
+        run: |
+          pandoc paper.md \
+            --from=markdown+tex_math_dollars \
+            --resource-path=. \
+            --reference-doc=reference.docx \
+            -o HDA_DeepSC_CSI_Loss_UI_Fragment.docx
+          test -s HDA_DeepSC_CSI_Loss_UI_Fragment.docx
+
+      - name: Collect outputs
+        working-directory: papers/CSI_Loss_UI_Fragment
+        run: |
+          mkdir -p output
+          cp main.pdf output/HDA_DeepSC_CSI_Loss_UI_Fragment_IEEE.pdf
+          cp HDA_DeepSC_CSI_Loss_UI_Fragment.docx output/
+          cp main.tex paper.md generate_figures.py make_reference_docx.py output/
+          cp -r figures output/
+          pdffonts main.pdf > output/pdf_font_report.txt || true
+          zip -r output/HDA_DeepSC_CSI_Loss_UI_Source.zip \
+            main.tex paper.md generate_figures.py make_reference_docx.py figures
+
+      - name: Upload PDF and Word
+        uses: actions/upload-artifact@v4
+        with:
+          name: HDA-DeepSC-CSI-Loss-UI-Paper-Fragment
+          path: papers/CSI_Loss_UI_Fragment/output/
+          if-no-files-found: error
+          retention-days: 30
