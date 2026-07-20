@@ -7,6 +7,12 @@ on:
     paths:
       - 'papers/CSI_Loss_UI_Fragment/**'
       - '.github/workflows/build-csi-loss-ui-fragment.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'papers/CSI_Loss_UI_Fragment/**'
+      - '.github/workflows/build-csi-loss-ui-fragment.yml'
   workflow_dispatch:
 
 permissions:
