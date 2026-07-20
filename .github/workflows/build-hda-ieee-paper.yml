@@ -50,7 +50,7 @@ jobs:
             exit 1
           fi
 
-      - name: Build editable Word draft
+      - name: Build editable English Word draft
         working-directory: papers/HDA_DeepSC_IEEE_Revised
         run: |
           curl -L \
@@ -65,6 +65,19 @@ jobs:
             --resource-path=. \
             -o HDA_DeepSC_IEEE_Draft.docx
           test -s HDA_DeepSC_IEEE_Draft.docx
+
+      - name: Build editable Chinese Word draft
+        working-directory: papers/HDA_DeepSC_IEEE_Revised
+        run: |
+          pandoc paper_chinese_word.md \
+            --from markdown+tex_math_dollars+pipe_tables \
+            --standalone \
+            --citeproc \
+            --bibliography=references.bib \
+            --csl=ieee.csl \
+            --resource-path=. \
+            -o HDA_DeepSC_Chinese_Draft.docx
+          test -s HDA_DeepSC_Chinese_Draft.docx
 
       - name: Inspect PDF properties and fonts
         working-directory: papers/HDA_DeepSC_IEEE_Revised
@@ -106,6 +119,8 @@ jobs:
             "$DIST/HDA_DeepSC_IEEE_Revised.pdf"
           cp "$SRC/HDA_DeepSC_IEEE_Draft.docx" \
             "$DIST/HDA_DeepSC_IEEE_Draft.docx"
+          cp "$SRC/HDA_DeepSC_Chinese_Draft.docx" \
+            "$DIST/HDA_DeepSC_Chinese_Draft.docx"
           cp "$SRC/build_report.txt" \
             "$DIST/build_report.txt"
 
