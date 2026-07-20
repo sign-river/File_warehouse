@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build:
@@ -31,7 +31,8 @@ jobs:
             pandoc \
             ghostscript \
             poppler-utils \
-            fonts-noto-cjk
+            fonts-noto-cjk \
+            zip
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -77,6 +78,21 @@ jobs:
             fragment.tex fragment_word.md references.bib generate_figures.py make_reference_docx.py README.md figures
           pdfinfo fragment.pdf > dist/build_report.txt
           pdffonts fragment.pdf >> dist/build_report.txt
+
+      - name: Publish generated PDF and Word to repository
+        run: |
+          mkdir -p generated/HDA_DeepSC_IEEE_Fragment_CN
+          cp papers/HDA_DeepSC_IEEE_Fragment_CN/dist/HDA_DeepSC_IEEE_Fragment_CN.pdf generated/HDA_DeepSC_IEEE_Fragment_CN/
+          cp papers/HDA_DeepSC_IEEE_Fragment_CN/dist/HDA_DeepSC_IEEE_Fragment_CN.docx generated/HDA_DeepSC_IEEE_Fragment_CN/
+          cp papers/HDA_DeepSC_IEEE_Fragment_CN/dist/HDA_DeepSC_IEEE_Fragment_CN_Source.zip generated/HDA_DeepSC_IEEE_Fragment_CN/
+          cp papers/HDA_DeepSC_IEEE_Fragment_CN/dist/build_report.txt generated/HDA_DeepSC_IEEE_Fragment_CN/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add generated/HDA_DeepSC_IEEE_Fragment_CN
+          if ! git diff --cached --quiet; then
+            git commit -m "Build Chinese IEEE fragment deliverables [skip ci]"
+            git push
+          fi
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
